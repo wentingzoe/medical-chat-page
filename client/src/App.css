@@ -408,6 +408,9 @@ body {
   width: 44px;
   height: 44px;
   margin: 14px;
+  position:absolute;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(150.64deg,
       rgba(0, 0, 0, 0.1) 12.73%,
       rgba(0, 0, 0, 0) 89.32%),
