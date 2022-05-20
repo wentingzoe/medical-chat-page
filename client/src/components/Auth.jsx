@@ -3,9 +3,28 @@ import Cookise from 'universal-cookie';
 import axios from 'axios';
 import signinImage from '../assets/signup.jpg';
 
+const initialState = {
+  fullname: '',
+  username: '',
+  password: '',
+  confirmpassword: '',
+  phonenumber: '',
+  avatarURL: '',
+}
+
 const Auth = () => {
+  const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(true);
-  const handleChange = () => { }
+
+  const handleChange = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(form);
+
+  }
+
   const switchMode = () => {
     setIsSignup((prev) => !prev);
   }
@@ -16,7 +35,7 @@ const Auth = () => {
         <div className='auth__form-container_fields-content'>
           <p>{isSignup ? 'Sign Up' : 'Sign In'}</p>
 
-          <form onSubmit={() => { }}>
+          <form onSubmit={handleSubmit}>
             {isSignup && (
               <div className="auth__form-container_fields-content_input">
                 <label htmlFor="fullname">Full Name</label>
@@ -75,9 +94,9 @@ const Auth = () => {
             </div>
             {isSignup && (
               <div className="auth__form-container_fields-content_input">
-                <label htmlFor="confirmPassword">Confirm Password</label>
+                <label htmlFor="confirmpassword">Confirm Password</label>
                 <input
-                  name="confirmPassword"
+                  name="confirmpassword"
                   type="password"
                   placeholder="Confirm Password"
                   onChange={handleChange}
@@ -85,6 +104,9 @@ const Auth = () => {
                 />
               </div>
             )}
+            <div className='auth__form-container_fields-content_button'>
+              <button>{isSignup ? 'Sign Up' : 'Sign In'}</button>
+            </div>
           </form>
           <div className="auth__form-container_fields-account">
             <p>
