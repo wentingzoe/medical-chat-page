@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const authRouts = require('./routs/auth');
+const authRoutes = require('./routes/auth.js');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -20,4 +20,6 @@ app.use(express.urlencoded());
 app.get('/',(req,res)=>{
     res.send('Hello World');
 })
+
+app.use('/auth', authRoutes);
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
