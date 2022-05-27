@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Cookise from 'universal-cookie';
+import Cookies from 'universal-cookie';
 import axios from 'axios';
 import signinImage from '../assets/signup.jpg';
+
+const cookies = new Cookies();
 
 const initialState = {
   fullname: '',
@@ -19,9 +21,24 @@ const Auth = () => {
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form);
+    const { fullname, username, password, phonenumber, avatarurl } = form;
+    const URL = 'http://localhost:8000/auth';
+    const { data: { token, userId, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, { fullname, username, password, phonenumber, avatarurl });
+
+    cookies.set('token', token);
+    cookies.set('userId', userId);
+    cookies.set('fullname', fullname);
+    cookies.set('username', username);
+
+    if (isSignup) {
+      cookies.set('hashedPassword', hashedPassword);
+      cookies.set('phonenumber', phonenumber);
+      cookies.set('avatarurl', avatarurl);
+    }
+
+    window.location.reload(); //reload page
 
   }
 
@@ -72,9 +89,9 @@ const Auth = () => {
             )}
             {isSignup && (
               <div className="auth__form-container_fields-content_input">
-                <label htmlFor="avatarURL">Avatar URL</label>
+                <label htmlFor="avatarurl">Avatar URL</label>
                 <input
-                  name="avatarURL"
+                  name="avatarurl"
                   type="text"
                   placeholder="Avatar URL"
                   onChange={handleChange}
