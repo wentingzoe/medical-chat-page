@@ -28,7 +28,7 @@ const CompanyHeader = () => (
     <p className="channel-list__header__text">Medical Pager</p>
   </div>
 );
-const ChannelListContainer = () => {
+const ChannelListContainer = ({ isCreating, setIsCreating, setIsEditing, setCreateType }) => {
   const logout = () => {
     cookies.remove('token');
     cookies.remove('userId');
@@ -50,15 +50,42 @@ const ChannelListContainer = () => {
         <ChannelList
           filters={{}}
           channelRenderFilterFn={() => { }}
-          List={(listProps) => <TeamChannelList {...listProps} type="team" />}
-          Preview={(previewProps) => <TeamChannelPreview {...previewProps} type="team" />}
+          List={(listProps) => (
+            <TeamChannelList
+              {...listProps}
+              type="team"
+              isCreating={isCreating}
+              setIsEditing={setIsEditing}
+              setCreateType={setCreateType}
+              setIsCreating={setIsCreating}
+            />
+          )}
+          Preview={(previewProps) => (
+            <TeamChannelPreview
+              {...previewProps}
+              type="team" />
+          )}
+
         />
 
         <ChannelList
           filters={{}}
           channelRenderFilterFn={() => { }}
-          List={(listProps) => <TeamChannelList {...listProps} type="messaging" />}
-          Preview={(previewProps) => <TeamChannelPreview {...previewProps} type="messaging" />}
+          List={(listProps) => (
+            <TeamChannelList
+              {...listProps}
+              type="messaging"
+              isCreating={isCreating}
+              setIsEditing={setIsEditing}
+              setCreateType={setCreateType}
+              setIsCreating={setIsCreating}
+            />
+          )}
+          Preview={(previewProps) => (
+            <TeamChannelPreview
+              {...previewProps}
+              type="team" />
+          )}
         />
       </div>
     </>
